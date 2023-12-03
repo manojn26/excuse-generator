@@ -1,49 +1,84 @@
 import { useState } from "react";
 import Axios from "axios";
+import { Button } from "@mui/material";
 
 export default function Excuse() {
   const [category, setCategory] = useState("");
   const [excuseData, setExcuseData] = useState(null);
-  const getCategory = (value) => {
-    setCategory(value);
-    Axios.get(`https://excuser-three.vercel.app/v1/excuse/${value}/`).then(
-      (response) => {
-        // console.log(response.data);
-        setExcuseData(response.data[0]);
-      }
-    );
+  const [activeBtn, setActiveBtn] = useState("general");
+  const btnHandler = (e) => {
+    setActiveBtn(e.target.value);
+    setCategory(e.target.value);
+    Axios.get(
+      `https://excuser-three.vercel.app/v1/excuse/${e.target.value}/`
+    ).then((response) => {
+      // console.log(response.data);
+      setExcuseData(response.data[0]);
+    });
+    console.log(activeBtn);
   };
   return (
     <div>
       <h1 className='headingText'>Excuse Generator</h1>
-      <div className='quote-category'>
-        <div className='quote family' onClick={() => getCategory("family")}>
+
+      <div className='button-container'>
+        <Button
+          variant={activeBtn === "family" ? "contained" : "outlined"}
+          value='family'
+          color='secondary'
+          onClick={btnHandler}
+        >
           Family
-        </div>
-        <div onClick={() => getCategory("party")} className='quote party'>
+        </Button>
+        <Button
+          variant={activeBtn === "party" ? "contained" : "outlined"}
+          value='party'
+          color='info'
+          onClick={btnHandler}
+        >
           Party
-        </div>
-        <div onClick={() => getCategory("office")} className='quote office'>
+        </Button>
+        <Button
+          variant={activeBtn === "office" ? "contained" : "outlined"}
+          value='office'
+          color='success'
+          onClick={btnHandler}
+        >
           Office
-        </div>
-        <div onClick={() => getCategory("children")} className='quote children'>
+        </Button>
+        <Button
+          variant={activeBtn === "children" ? "contained" : "outlined"}
+          value='children'
+          color='warning'
+          onClick={btnHandler}
+        >
           Children
-        </div>
-        <div onClick={() => getCategory("college")} className='quote college'>
+        </Button>
+        <Button
+          variant={activeBtn === "college" ? "contained" : "outlined"}
+          value='college'
+          onClick={btnHandler}
+        >
           College
-        </div>
-        <div
-          onClick={() => getCategory("developers")}
-          className='quote developers'
+        </Button>
+        <Button
+          variant={activeBtn === "developers" ? "contained" : "outlined"}
+          value='developers'
+          color='error'
+          onClick={btnHandler}
         >
           Developers
-        </div>
+        </Button>
       </div>
-      <div className='quote-selection'>
-        <h3>Excuse for : {category} </h3>
+      <div className='excuse-for'>
+        <p>Excuse For : {category.toUpperCase()}</p>
       </div>
-      <div className='quote-response'>
-        <p>{excuseData?.excuse}</p>
+      <div className='excuse-data'>
+        {excuseData?.excuse ? (
+          <p className='excuse'>{excuseData?.excuse}</p>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
