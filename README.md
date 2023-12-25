@@ -4,6 +4,8 @@
 
 The Excuse Generator is a fun and lighthearted project that generates creative excuses for a variety of situations. It's designed to provide users with amusing and sometimes unexpected excuses to use in different scenarios.
 
+## Project Live URL : https://my-excuse.netlify.app/
+
 ## Features
 
 - **Excuse Categories:** The Excuse Generator covers a range of categories, allowing users to find the perfect excuse for their specific situation.
